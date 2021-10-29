@@ -1,14 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-self-compare */
-import { useState,useEffect } from 'react';
-import { ToastContainer} from 'react-toastify';
+import { useState, useEffect } from 'react';
+import { Switch, Route } from 'react-router';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.module.css';
 
-import fetchApi from 'components/Service-api';
+import Appbar from 'components/Appbar';
+import api from 'components/Service-api';
 import Container from 'components/Container';
-import Searchbar from 'components/Searchbar';
-
+import SearchForm from 'components/SearchForm';
+import Spinner from 'components/Spinner';
+import HomePage from 'views/HomePage';
+import NotFoundView from 'views/NotFoundView';
 
 const Status = {
   IDLE: 'idle',
@@ -17,45 +19,44 @@ const Status = {
   REJECTED: 'rejected',
 };
 
-export default function App () {
-//   const[status,setStatus] = useState(Status.IDLE);
-//   const[query,setQuery] = useState('');
+export default function App() {
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState(Status.IDLE);
 
-// useEffect(() => {
-//  if(!query){
-//    return
-//  }
-//     setStatus(Status.PENDING );
-//       fetchApi(query, page)
-//       .then(data => data.hits)
-//       .then(data => {
-//         setImageArr([...imageArr,...data]);
-//         setStatus(Status.RESOLVED)
-//           if(page!==1) {
-//             window.scrollTo({
-//             top: document.documentElement.scrollHeight,
-//             behavior: 'smooth',
-//           })
-//         }
-//       });
-// },[page,query])
+  // api.fetchHomePage().then(r => console.log(r));
+  // api.fetchMovieDetails().then(r => console.log(r));
+  // api.fetchMovieCredits().then(r => console.log(r));
+  // api.fetchMovieReviews().then(r => console.log(r));
 
-// const handleFormSubmit = query =>{
-//   setQuery(query);
-//   setPage (1);
-// };
+  useEffect(() => {
+    if (!query) {
+      return;
+    }
+    setStatus(Status.PENDING);
+    api.fetchSearch(query);
+    setStatus(Status.RESOLVED);
+  }, [query]);
 
+  const handleFormSubmit = query => {
+    setQuery(query);
+  };
 
-
-    return (
-      <Container>
-        {/* <Searchbar onSubmit={handleFormSubmit} />
-        {status === Status.PENDING && <Spinner />}
-        <ToastContainer autoClose={2000}/> */}
-        </Container>
-    );
- }
-
-
-
-
+  return (
+    <Container>
+      <Appbar />
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+        <Route path="/movies">
+          <SearchForm onSubmit={handleFormSubmit} />
+          {status === Status.PENDING && <Spinner />}
+          <ToastContainer autoClose={2000} />
+        </Route>
+        <Route>
+          <NotFoundView />
+        </Route>
+      </Switch>
+    </Container>
+  );
+}
