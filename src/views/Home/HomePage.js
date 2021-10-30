@@ -1,16 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './HomePage.module.css';
+import Button from 'components/Button';
 import api from 'components/Service-api';
 
 export default function HomePage() {
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
   useEffect(() => {
     api
-      .fetchHomePage()
+      .fetchHomePage(page)
       .then(res => res.results)
-      .then(setMovies);
-  }, []);
+      .then(res => {
+        setMovies([...movies, ...res]);
+        if (page !== 1) {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+          });
+        }
+      });
+  }, [page]);
+
+  const buttonLoadMore = () => {
+    setPage(page + 1);
+  };
 
   return (
     <>
@@ -22,7 +37,8 @@ export default function HomePage() {
               <li key={movie.id}>
                 <NavLink to={`/movies/${movie.id}`}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                    className={s.image}
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt={movie.original_title}
                   />
                   <p>{movie.title || movie.name}</p>
@@ -32,6 +48,7 @@ export default function HomePage() {
             ))}
         </ul>
       </div>
+      {<Button onClick={buttonLoadMore} />}
     </>
   );
 }

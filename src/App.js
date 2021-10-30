@@ -9,7 +9,8 @@ import api from 'components/Service-api';
 import Container from 'components/Container';
 import SearchForm from 'components/SearchForm';
 import Spinner from 'components/Spinner';
-import HomePage from 'views/HomePage';
+
+import HomePage from 'views/Home/HomePage';
 import NotFoundView from 'views/NotFoundView';
 
 const Status = {
@@ -21,6 +22,7 @@ const Status = {
 
 export default function App() {
   const [query, setQuery] = useState('');
+
   const [status, setStatus] = useState(Status.IDLE);
 
   // api.fetchHomePage().then(r => console.log(r));
