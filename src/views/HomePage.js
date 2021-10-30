@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
-
 import Button from 'components/Button';
 import api from 'components/Service-api';
 import MovieItem from 'components/MovieItem';
 
 export default function HomePage() {
-  const { url } = useRouteMatch();
-  console.log(url);
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   useEffect(() => {
@@ -34,7 +30,7 @@ export default function HomePage() {
     <>
       <div>
         <h1>Trending today</h1>
-        <MovieItem movies={movies} url={url} />
+        <MovieItem movies={movies} />
       </div>
       {<Button onClick={buttonLoadMore} />}
     </>

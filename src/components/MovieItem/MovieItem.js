@@ -1,14 +1,14 @@
 import s from './MovieItem.module.css';
 import { Link } from 'react-router-dom';
 
-export default function MovieItem({ movies, url }) {
+export default function MovieItem({ movies }) {
   return (
     <>
       <ul className={s.grid}>
         {movies &&
           movies.map(movie => (
             <li key={movie.id}>
-              <Link to={`${url}/${movie.id}`}>
+              <Link to={`/movies/${movie.id}`}>
                 <img
                   className={s.image}
                   src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

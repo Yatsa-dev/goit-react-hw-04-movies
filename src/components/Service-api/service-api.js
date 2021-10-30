@@ -22,8 +22,7 @@ const fetchSearch = async (query, page) => {
 };
 
 const fetchMovieDetails = async movieId => {
-  // movieId:'438631',
-  const url = `${BASE_URL}movie/438631?api_key=${API_KEY}&language=en-US`;
+  const url = `${BASE_URL}movie/${movieId}?api_key=${API_KEY}&language=en-US`;
   const { data } = await axios.get(url);
   return data;
 };

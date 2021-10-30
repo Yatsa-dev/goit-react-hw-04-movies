@@ -10,11 +10,6 @@ import MoviesPage from 'views/MoviesPage';
 import MovieDetailsPage from 'components/MovieDetailsPage';
 
 export default function App() {
-  // api.fetchHomePage().then(r => console.log(r));
-  // api.fetchMovieDetails().then(r => console.log(r));
-  // api.fetchMovieCredits().then(r => console.log(r));
-  // api.fetchMovieReviews().then(r => console.log(r));
-
   return (
     <Container>
       <Appbar />

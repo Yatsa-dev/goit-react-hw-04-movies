@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,8 +17,6 @@ const Status = {
 };
 
 export default function MoviesPage() {
-  const { url } = useRouteMatch();
-  console.log(url);
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState(Status.IDLE);
   const [page, setPage] = useState(1);
@@ -56,7 +53,7 @@ export default function MoviesPage() {
   return (
     <>
       <SearchForm onSubmit={handleFormSubmit} />
-      <MovieItem movies={movies} url={url} />
+      <MovieItem movies={movies} />
       {movies.length > 0 && <Button onClick={buttonLoadMore} />}
       <ToastContainer autoClose={2000} />
       {status === Status.PENDING && <Spinner />}

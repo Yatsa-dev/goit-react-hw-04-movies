@@ -1,0 +1,18 @@
+.list {
+  margin-top: 30px;
+  margin-left: 30px;
+  font-size: 25px;
+}
+
+.item {
+  margin-left: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.title {
+  font-size: 30px;
+  color: black;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
