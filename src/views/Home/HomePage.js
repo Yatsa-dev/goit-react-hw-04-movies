@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import s from './HomePage.module.css';
 import Button from 'components/Button';
 import api from 'components/Service-api';
 
 export default function HomePage() {
+  const { url } = useRouteMatch();
+  console.log(url);
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function HomePage() {
           {movies &&
             movies.map(movie => (
               <li key={movie.id}>
-                <NavLink to={`/movies/${movie.id}`}>
+                <Link to={`${url}movies/${movie.id}`}>
                   <img
                     className={s.image}
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -43,7 +45,7 @@ export default function HomePage() {
                   />
                   <p>{movie.title || movie.name}</p>
                   <p>{movie.release_date}</p>
-                </NavLink>
+                </Link>
               </li>
             ))}
         </ul>
