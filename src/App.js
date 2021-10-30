@@ -4,9 +4,10 @@ import './App.module.css';
 import Appbar from 'components/Appbar';
 import Container from 'components/Container';
 
-import HomePage from 'views/Home/HomePage';
+import HomePage from 'views/HomePage';
 import NotFoundView from 'views/NotFoundView';
-import MoviesPage from 'views/Movie/MoviesPage';
+import MoviesPage from 'views/MoviesPage';
+import MovieDetailsPage from 'components/MovieDetailsPage';
 
 export default function App() {
   // api.fetchHomePage().then(r => console.log(r));
@@ -21,8 +22,11 @@ export default function App() {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path="/movies">
+        <Route path="/movies" exact>
           <MoviesPage />
+        </Route>
+        <Route path="/movies/:movieId">
+          <MovieDetailsPage />
         </Route>
         <Route>
           <NotFoundView />

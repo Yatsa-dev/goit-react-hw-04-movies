@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
-import s from './HomePage.module.css';
+import { useRouteMatch } from 'react-router-dom';
+
 import Button from 'components/Button';
 import api from 'components/Service-api';
+import MovieItem from 'components/MovieItem';
 
 export default function HomePage() {
   const { url } = useRouteMatch();
@@ -33,22 +34,7 @@ export default function HomePage() {
     <>
       <div>
         <h1>Trending today</h1>
-        <ul className={s.grid}>
-          {movies &&
-            movies.map(movie => (
-              <li key={movie.id}>
-                <Link to={`${url}movies/${movie.id}`}>
-                  <img
-                    className={s.image}
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.original_title}
-                  />
-                  <p>{movie.title || movie.name}</p>
-                  <p>{movie.release_date}</p>
-                </Link>
-              </li>
-            ))}
-        </ul>
+        <MovieItem movies={movies} url={url} />
       </div>
       {<Button onClick={buttonLoadMore} />}
     </>

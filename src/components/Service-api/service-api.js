@@ -9,10 +9,10 @@ const fetchHomePage = async page => {
   return data;
 };
 
-const fetchSearch = async query => {
+const fetchSearch = async (query, page) => {
   const searchParams = new URLSearchParams({
     query: query,
-    page: 1,
+    page: page,
     include_adult: false,
     language: 'en-US',
   });
