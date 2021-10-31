@@ -15,8 +15,8 @@ export default function SearchForm({ onSubmit }) {
       toast.error('Sorry,input field is empty');
       return;
     }
-    setQuery('');
     onSubmit(query);
+    setQuery('');
   };
   return (
     <form onSubmit={handleSubmit} className={s.SearchForm}>

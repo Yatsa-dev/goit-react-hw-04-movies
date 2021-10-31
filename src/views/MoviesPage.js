@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { useHistory, useLocation } from 'react-router';
+import queryString from 'query-string';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SearchForm from 'components/SearchForm';
@@ -17,18 +19,23 @@ const Status = {
 };
 
 export default function MoviesPage() {
-  const [query, setQuery] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+  const { search } = location;
+  const { query } = queryString.parse(search);
+
+  const [searchQuery, setSearchQuery] = useState(query || '');
   const [status, setStatus] = useState(Status.IDLE);
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    if (!query) {
+    if (!searchQuery) {
       return;
     }
     setStatus(Status.PENDING);
     api
-      .fetchSearch(query, page)
+      .fetchSearch(searchQuery, page)
       .then(res => res.results)
       .then(res => {
         setMovies([...movies, ...res]);
@@ -40,12 +47,13 @@ export default function MoviesPage() {
         }
         setStatus(Status.RESOLVED);
       });
-  }, [query, page]);
+  }, [searchQuery, page]);
 
   const handleFormSubmit = query => {
-    setQuery(query);
+    setSearchQuery(query);
     setPage(1);
     setMovies([]);
+    history.push({ ...location, search: `query=${query}` });
   };
   const buttonLoadMore = () => {
     setPage(page + 1);
@@ -53,7 +61,7 @@ export default function MoviesPage() {
   return (
     <>
       <SearchForm onSubmit={handleFormSubmit} />
-      <MovieItem movies={movies} />
+      <MovieItem movies={movies} location={location} />
       {movies.length > 0 && <Button onClick={buttonLoadMore} />}
       <ToastContainer autoClose={2000} />
       {status === Status.PENDING && <Spinner />}

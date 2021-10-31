@@ -1,5 +1,4 @@
 import axios from 'axios';
-// https://api.themoviedb.org/3/movie/550?api_key=ac6228c5d4d762562ef059715b37d565
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'ac6228c5d4d762562ef059715b37d565';
 
@@ -28,15 +27,13 @@ const fetchMovieDetails = async movieId => {
 };
 
 const fetchMovieCredits = async movieId => {
-  // movieId:'438631',
-  const url = `${BASE_URL}movie/438631/credits?api_key=${API_KEY}&language=en-US`;
+  const url = `${BASE_URL}movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`;
   const { data } = await axios.get(url);
   return data;
 };
 
 const fetchMovieReviews = async movieId => {
-  // movieId:'438631',
-  const url = `${BASE_URL}movie/438631/reviews?api_key=${API_KEY}&language=en-US`;
+  const url = `${BASE_URL}movie/${movieId}/reviews?api_key=${API_KEY}&language=en-US`;
   const { data } = await axios.get(url);
   return data;
 };

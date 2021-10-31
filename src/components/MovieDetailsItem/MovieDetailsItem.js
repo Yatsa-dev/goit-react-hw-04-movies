@@ -1,7 +1,10 @@
 import s from './MovieDetailsItem.module.css';
-export default function MovieDetailsItem({ movie }) {
+export default function MovieDetailsItem({ movie, onGoBack }) {
   return (
     <>
+      <button className={s.button} type="button" onClick={onGoBack}>
+        Back
+      </button>
       <div className={s.movieDetail}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
