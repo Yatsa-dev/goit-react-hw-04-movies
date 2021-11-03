@@ -9,11 +9,11 @@ export default function ButtonToTop({ show }) {
   };
   return (
     <>
-      {show && (
-        <button className={s.scrollToTopBtn} onClick={buttonToTop}>
-          &#11165;
-        </button>
-      )}
+      {/* {show && ( */}
+      <button className={s.scrollToTopBtn} onClick={buttonToTop}>
+        &#11165;
+      </button>
+      {/* )} */}
     </>
   );
 }
