@@ -58,6 +58,7 @@ export default function MoviesPage() {
   const buttonLoadMore = () => {
     setPage(page + 1);
   };
+
   return (
     <>
       <SearchForm onSubmit={handleFormSubmit} />

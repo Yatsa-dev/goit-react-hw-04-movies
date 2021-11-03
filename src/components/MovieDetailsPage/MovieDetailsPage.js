@@ -19,6 +19,7 @@ export default function MovieDetailsPage() {
   const { url, path } = useRouteMatch();
   const { movieId } = useParams();
   const [movie, setMovie] = useState();
+  // const [page, setPage] = useState(1);
   const location = useLocation();
   const history = useHistory();
 
