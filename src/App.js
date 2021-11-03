@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router';
 import Appbar from 'components/Appbar';
 import Container from 'components/Container';
+import SkrollToTop from 'components/SkrollToTop';
 import './App.module.css';
 
 const HomePage = lazy(() =>
@@ -38,6 +39,7 @@ export default function App() {
           </Route>
         </Switch>
       </Suspense>
+      <SkrollToTop showBelow={250} />
     </Container>
   );
 }
