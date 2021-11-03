@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Button from 'components/Button';
 import api from 'components/Service-api';
 import MovieItem from 'components/MovieItem';
@@ -25,6 +25,24 @@ export default function HomePage() {
   const buttonLoadMore = () => {
     setPage(page + 1);
   };
+  // const containerRef = useRef();
+  // const sentielRef = useRef();
+
+  // function scrollCallback(entries: IntersectionObserverEntry[]) {
+  //   if (entries.isInteresting) {
+  //     console.log(entries);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   const scroll = new IntersectionObserver(scrollCallback, {
+  //     root: containerRef.current,
+  //   });
+  //   scroll.observe(sentielRef.current);
+  //   return () => {
+  //     scroll.disconnect();
+  //   };
+  // }, []);
 
   return (
     <>

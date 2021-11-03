@@ -8,17 +8,17 @@ const useStyles = makeStyles(theme => ({
     zIndex: 2,
     position: 'fixed',
     bottom: '2vh',
-    backgroundColor: '#212121',
+    backgroundColor: '#fff',
     color: 'black',
     '&:hover, &.Mui-focusVisible': {
       transition: '0.5s',
       color: '#fff',
-      backgroundColor: '#454f64',
-      boxShadow: '3px 5px 5px rgba(0, 0, 0, 0.12)',
+      backgroundColor: '#2a363b',
+      boxShadow: '3px 5px 5px rgba(3, 5, 5, 0.12)',
     },
     [theme.breakpoints.up('xs')]: {
       right: '5%',
-      backgroundColor: 'rgb(220,220,220,0.7)',
+      backgroundColor: '#8c9092',
     },
     [theme.breakpoints.up('lg')]: {
       right: '6.5%',
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Scroll = ({ showBelow }) => {
+const ScrollToTop = ({ showBelow }) => {
   const classes = useStyles();
 
   const [show, setShow] = useState(showBelow ? false : true);
@@ -65,4 +65,4 @@ const Scroll = ({ showBelow }) => {
     </div>
   );
 };
-export default Scroll;
+export default ScrollToTop;
