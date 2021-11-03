@@ -9,16 +9,16 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     bottom: '2vh',
     backgroundColor: '#fff',
-    color: 'black',
+    color: '#fff',
     '&:hover, &.Mui-focusVisible': {
-      transition: '0.5s',
-      color: '#fff',
-      backgroundColor: '#2a363b',
+      transition: '0.3s',
+      color: '#212121',
+      backgroundColor: '#8c9092',
       boxShadow: '3px 5px 5px rgba(3, 5, 5, 0.12)',
     },
     [theme.breakpoints.up('xs')]: {
       right: '5%',
-      backgroundColor: '#8c9092',
+      backgroundColor: '#2a363b',
     },
     [theme.breakpoints.up('lg')]: {
       right: '6.5%',
