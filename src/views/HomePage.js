@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'components/Button';
 import api from 'components/Service-api';
 import MovieItem from 'components/MovieItem';

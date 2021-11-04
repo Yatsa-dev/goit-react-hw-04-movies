@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router';
 import queryString from 'query-string';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,7 +36,16 @@ export default function MoviesPage() {
     setStatus(Status.PENDING);
     api
       .fetchSearch(searchQuery, page)
-      .then(res => res.results)
+      .then(res => {
+        if (res.total_pages === 0) {
+          toast.dark(
+            `Sorry, there are no movies ${searchQuery} name. Please try again`,
+          );
+          setStatus(Status.RESOLVED);
+        }
+
+        return res.results;
+      })
       .then(res => {
         setMovies([...movies, ...res]);
         if (page !== 1) {
@@ -61,10 +70,14 @@ export default function MoviesPage() {
 
   return (
     <>
-      <SearchForm onSubmit={handleFormSubmit} />
+      <SearchForm onSubmit={handleFormSubmit}></SearchForm>
       <MovieItem movies={movies} location={location} />
       {movies.length > 0 && <Button onClick={buttonLoadMore} />}
-      <ToastContainer autoClose={2000} />
+      <ToastContainer
+        autoClose={2000}
+        closeOnClick={true}
+        position="top-center"
+      />
       {status === Status.PENDING && <Spinner />}
     </>
   );

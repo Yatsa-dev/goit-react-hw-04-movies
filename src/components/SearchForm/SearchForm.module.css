@@ -7,6 +7,7 @@
   border-radius: 3px;
   overflow: hidden;
   box-shadow: slategray;
+  margin-bottom: 8px;
 }
 
 .button {
@@ -55,4 +56,9 @@
 .input::placeholder {
   font: inherit;
   font-size: 18px;
+}
+
+.icon {
+  background-color: #fff;
+  color: #fff;
 }
