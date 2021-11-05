@@ -58,7 +58,7 @@ export default function SearchForm({ onSubmit }) {
         value={query}
         onChange={handleQueryChange}
         type="text"
-        placeholder="Search movie"
+        placeholder="Start by searching by movie title "
       />
     </form>
   );

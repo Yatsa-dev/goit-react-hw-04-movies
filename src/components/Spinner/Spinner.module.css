@@ -1,6 +1,6 @@
 .spinner {
-    display: inline-block;
-    position: relative;
-    left: 45%;
-    top: 10px;
-  }
+  display: block;
+  position: relative;
+  left: 45%;
+  top: 10px;
+}
