@@ -7,17 +7,19 @@ import Spinner from 'components/Spinner';
 import './App.module.css';
 
 const HomePage = lazy(() =>
-  import('./views/HomePage'),
-); /* webpackChunkName: "HomePage" */
+  import('./views/HomePage' /* webpackChunkName: "HomePage" */),
+);
 const MoviesPage = lazy(() =>
-  import('./views/MoviesPage'),
-); /* webpackChunkName: "MoviesPage" */
+  import('./views/MoviesPage' /* webpackChunkName: "MoviesPage" */),
+);
 const NotFoundView = lazy(() =>
-  import('./views/NotFoundView'),
-); /* webpackChunkName: "NotFoundPage" */
-
+  import('./views/NotFoundView' /* webpackChunkName: "NotFoundPage" */),
+);
 const MovieDetailsPage = lazy(() =>
-  import('./components/MovieDetailsPage/MovieDetailsPage'),
+  import(
+    './components/MovieDetailsPage/MovieDetailsPage'
+    /* webpackChunkName: "MovieDetailsPage" */
+  ),
 );
 
 export default function App() {
