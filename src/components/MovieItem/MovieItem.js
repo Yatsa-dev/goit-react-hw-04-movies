@@ -1,7 +1,7 @@
 import s from './MovieItem.module.css';
 import { NavLink } from 'react-router-dom';
 
-export default function MovieItem({ movies, location }) {
+export default function MovieItem({ movies, location, setLastElement }) {
   return (
     <>
       <ul className={s.grid}>
@@ -13,6 +13,7 @@ export default function MovieItem({ movies, location }) {
                   pathname: `/movies/${movie.id}`,
                   state: { from: location },
                 }}
+                ref={setLastElement}
               >
                 <img
                   className={s.image}

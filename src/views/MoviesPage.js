@@ -29,29 +29,6 @@ export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [lastElement, setLastElement] = useState(null);
 
-  const observer = useRef(
-    new IntersectionObserver(entries => {
-      const first = entries[0];
-      if (first.isIntersecting) {
-        setPage(no => no + 1);
-      }
-    }),
-  );
-  useEffect(() => {
-    const currentElement = lastElement;
-    const currentObserver = observer.current;
-
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [lastElement]);
-
   useEffect(() => {
     if (!searchQuery) {
       return;
@@ -81,6 +58,29 @@ export default function MoviesPage() {
       });
   }, [searchQuery, page]);
 
+  const observer = useRef(
+    new IntersectionObserver(entries => {
+      const first = entries[0];
+      if (first.isIntersecting) {
+        setPage(page + 1);
+      }
+    }),
+  );
+  useEffect(() => {
+    const currentElement = lastElement;
+    const currentObserver = observer.current;
+
+    if (currentElement) {
+      currentObserver.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        currentObserver.unobserve(currentElement);
+      }
+    };
+  }, [lastElement]);
+
   const handleFormSubmit = query => {
     setSearchQuery(query);
     setPage(1);
@@ -91,14 +91,17 @@ export default function MoviesPage() {
   return (
     <>
       <SearchForm onSubmit={handleFormSubmit}></SearchForm>
-      <MovieItem movies={movies} location={location} />
+      <MovieItem
+        movies={movies}
+        location={location}
+        setLastElement={setLastElement}
+      />
       <ToastContainer
         autoClose={2000}
         closeOnClick={true}
         position="top-center"
       />
       {status === Status.PENDING && <Spinner />}
-      <div ref={setLastElement} id="sentinel"></div>
     </>
   );
 }

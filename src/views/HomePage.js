@@ -12,7 +12,7 @@ export default function HomePage() {
     new IntersectionObserver(entries => {
       const first = entries[0];
       if (first.isIntersecting) {
-        setPage(no => no + 1);
+        setPage(page + 1);
       }
     }),
   );
@@ -50,9 +50,8 @@ export default function HomePage() {
     <>
       <div>
         <h1>Trending today</h1>
-        <MovieItem movies={movies} />
+        <MovieItem movies={movies} setLastElement={setLastElement} />
       </div>
-      <div ref={setLastElement} id="sentinel"></div>
     </>
   );
 }
