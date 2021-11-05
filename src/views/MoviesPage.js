@@ -62,7 +62,7 @@ export default function MoviesPage() {
     new IntersectionObserver(entries => {
       const first = entries[0];
       if (first.isIntersecting) {
-        setPage(page + 1);
+        setPage(no => no + 1);
       }
     }),
   );
