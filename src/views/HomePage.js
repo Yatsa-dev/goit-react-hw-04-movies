@@ -1,13 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from 'react';
-import Button from 'components/Button';
 import api from 'components/Service-api';
 import MovieItem from 'components/MovieItem';
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const ref = useRef();
+  const [lastElement, setLastElement] = useState(null);
+
+  const observer = useRef(
+    new IntersectionObserver(entries => {
+      const first = entries[0];
+      if (first.isIntersecting) {
+        setPage(no => no + 1);
+      }
+    }),
+  );
+  useEffect(() => {
+    const currentElement = lastElement;
+    const currentObserver = observer.current;
+
+    if (currentElement) {
+      currentObserver.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        currentObserver.unobserve(currentElement);
+      }
+    };
+  }, [lastElement]);
+
   useEffect(() => {
     api
       .fetchHomePage(page)
@@ -16,26 +39,12 @@ export default function HomePage() {
         setMovies([...movies, ...res]);
         if (page !== 1) {
           window.scrollTo({
-            top: document.documentElement.scrollHeight + 10,
+            top: document.documentElement.scrollHeight,
             behavior: 'smooth',
           });
         }
       });
-  }, [page, ref]);
-  const observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      console.log(ref);
-    }
-  });
-  if (ref.current) {
-    observer.observe(ref.current);
-
-    // setPage(page + 1);
-    //  observer.disconnect(ref.current);
-  }
-  const buttonLoadMore = () => {
-    setPage(page + 1);
-  };
+  }, [page]);
 
   return (
     <>
@@ -43,8 +52,7 @@ export default function HomePage() {
         <h1>Trending today</h1>
         <MovieItem movies={movies} />
       </div>
-      {<Button onClick={buttonLoadMore} />}
-      <div ref={ref} id="sentinel"></div>
+      <div ref={setLastElement} id="sentinel"></div>
     </>
   );
 }

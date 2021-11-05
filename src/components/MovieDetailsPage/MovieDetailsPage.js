@@ -10,10 +10,13 @@ import {
 } from 'react-router-dom';
 import api from 'components/Service-api/service-api';
 import MovieDetailsItem from 'components/MovieDetailsItem';
+import Spinner from 'components/Spinner';
 import s from './MovieDetailsPage.module.css';
 
-const Cast = lazy(() => import('../Cast/Cast'));
-const Reviews = lazy(() => import('../Reviews/Reviews'));
+const Cast = lazy(() => import('../Cast/Cast' /* webpackChunkName: "Cast" */));
+const Reviews = lazy(() =>
+  import('../Reviews/Reviews' /* webpackChunkName: "Reviews" */),
+);
 
 export default function MovieDetailsPage() {
   const { url, path } = useRouteMatch();
@@ -53,7 +56,7 @@ export default function MovieDetailsPage() {
           </ul>
         </div>
       }
-      <Suspense fallback="Loading...">
+      <Suspense fallback={<Spinner />}>
         <Route path={`${path}/cast`}>
           <Cast />
         </Route>

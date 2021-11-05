@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router';
 import queryString from 'query-string';
@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import SearchForm from 'components/SearchForm';
 import Spinner from 'components/Spinner';
 import MovieItem from 'components/MovieItem';
-import Button from 'components/Button';
 import api from 'components/Service-api';
 
 const Status = {
@@ -28,6 +27,30 @@ export default function MoviesPage() {
   const [status, setStatus] = useState(Status.IDLE);
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
+  const [lastElement, setLastElement] = useState(null);
+
+  const observer = useRef(
+    new IntersectionObserver(entries => {
+      const first = entries[0];
+      if (first.isIntersecting) {
+        setPage(no => no + 1);
+      }
+    }),
+  );
+  useEffect(() => {
+    const currentElement = lastElement;
+    const currentObserver = observer.current;
+
+    if (currentElement) {
+      currentObserver.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        currentObserver.unobserve(currentElement);
+      }
+    };
+  }, [lastElement]);
 
   useEffect(() => {
     if (!searchQuery) {
@@ -64,21 +87,18 @@ export default function MoviesPage() {
     setMovies([]);
     history.push({ ...location, search: `query=${query}` });
   };
-  const buttonLoadMore = () => {
-    setPage(page + 1);
-  };
 
   return (
     <>
       <SearchForm onSubmit={handleFormSubmit}></SearchForm>
       <MovieItem movies={movies} location={location} />
-      {movies.length > 0 && <Button onClick={buttonLoadMore} />}
       <ToastContainer
         autoClose={2000}
         closeOnClick={true}
         position="top-center"
       />
       {status === Status.PENDING && <Spinner />}
+      <div ref={setLastElement} id="sentinel"></div>
     </>
   );
 }
