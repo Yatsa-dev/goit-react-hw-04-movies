@@ -34,30 +34,28 @@ export default function MoviesPage() {
       return;
     }
     setStatus(Status.PENDING);
-    setTimeout(() => {
-      api
-        .fetchSearch(searchQuery, page)
-        .then(res => {
-          if (res.total_pages === 0) {
-            toast.dark(
-              `Sorry, there are no movies ${searchQuery} name. Please try again`,
-            );
-            setStatus(Status.RESOLVED);
-          }
-
-          return res.results;
-        })
-        .then(res => {
-          setMovies([...movies, ...res]);
-          if (page !== 1) {
-            window.scrollTo({
-              top: document.documentElement.scrollHeight,
-              behavior: 'smooth',
-            });
-          }
+    api
+      .fetchSearch(searchQuery, page)
+      .then(res => {
+        if (res.total_pages === 0) {
+          toast.dark(
+            `Sorry, there are no movies ${searchQuery} name. Please try again`,
+          );
           setStatus(Status.RESOLVED);
-        });
-    }, 5000);
+        }
+
+        return res.results;
+      })
+      .then(res => {
+        setMovies([...movies, ...res]);
+        if (page !== 1) {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+          });
+        }
+        setStatus(Status.RESOLVED);
+      });
   }, [searchQuery, page]);
 
   const handleFormSubmit = query => {

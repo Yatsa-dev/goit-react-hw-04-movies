@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 import Appbar from 'components/Appbar';
 import Container from 'components/Container';
 import SkrollToTop from 'components/SkrollToTop';
+import Spinner from 'components/Spinner';
 import './App.module.css';
 
 const HomePage = lazy(() =>
@@ -23,7 +24,7 @@ export default function App() {
   return (
     <Container>
       <Appbar />
-      <Suspense fallback="Loading...">
+      <Suspense fallback={<Spinner />}>
         <Switch>
           <Route path="/" exact>
             <HomePage />
