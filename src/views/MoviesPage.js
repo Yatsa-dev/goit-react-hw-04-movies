@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useHistory, useLocation } from 'react-router';
-import queryString from 'query-string';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SearchForm from 'components/SearchForm';
@@ -21,7 +20,7 @@ export default function MoviesPage() {
   const history = useHistory();
   const location = useLocation();
   const { search } = location;
-  const { query } = queryString.parse(search);
+  const query = new URLSearchParams(search).get('query');
 
   const [searchQuery, setSearchQuery] = useState(query || '');
   const [status, setStatus] = useState(Status.IDLE);
@@ -39,7 +38,7 @@ export default function MoviesPage() {
       .then(res => {
         if (res.total_pages === 0) {
           toast.dark(
-            `Sorry, there are no movies ${searchQuery} name. Please try again`,
+            `Sorry, there are no movies ${searchQuery} title. Please try again`,
           );
           setStatus(Status.RESOLVED);
         }
