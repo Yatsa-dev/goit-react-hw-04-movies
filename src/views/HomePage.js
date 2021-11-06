@@ -37,12 +37,6 @@ export default function HomePage() {
       .then(res => res.results)
       .then(res => {
         setMovies([...movies, ...res]);
-        if (page !== 1) {
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth',
-          });
-        }
       });
   }, [page]);
 
